@@ -1,8 +1,11 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { account } from "../utils/appwriteConfig";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useUserAuth } from "../utils/Hooks/useUserAuth";
 
 const Signin = () => {
+  const { user, handleLogin, error } = useUserAuth();
+
+  const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
@@ -11,22 +14,24 @@ const Signin = () => {
   const handleInputChange = (e) => {
     let name = e.target.name;
     let value = e.target.value;
-
     setCredentials({ ...credentials, [name]: value });
   };
 
-  const handleSignIn = async () => {
-    const response = await account.createEmailSession(
-      credentials.email,
-      credentials.password
-    );
-    console.log("response:", response);
-  };
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <div className="border border-black w-10/12 mx-auto mt-32 p-4 bg-black">
       <span className="text-4xl mb-10 font-bold text-green-600">Sign In</span>
-      <form className="w-full mt-4" onSubmit={handleInputChange}>
+      <form
+        className="w-full mt-4"
+        onSubmit={(e) => {
+          handleLogin(e, credentials);
+        }}
+      >
         <label
           htmlFor="email"
           className="text-sm focus:outline-none hover:border-gray-400 text-white"
@@ -59,14 +64,17 @@ const Signin = () => {
             className="p-2 mt-1 border border-gray-300 rounded focus:outline-none focus:border-green-500 hover:border-gray-400 text-black"
           />
         </label>
+
+        {error && (
+          <div className="text-sm text-red-600 font-bold mt-1">{error}</div>
+        )}
+        <button
+          type="submit"
+          className="bg-green-400 text-black p-2 rounded hover:bg-green-700 focus:outline-none focus:ring-2  focus:border-white mt-4 mb-2 font-semibold"
+        >
+          Sign in
+        </button>
       </form>
-      <button
-        type="submit"
-        className="bg-green-400 text-black p-2 rounded hover:bg-green-700 focus:outline-none focus:ring-2  focus:border-white mt-4 mb-2 font-semibold"
-        onClick={handleSignIn}
-      >
-        Sign in
-      </button>
       <div>
         <span className="mt-1 text-xs focus:outline-none hover:border-gray-400 text-white">
           Not registered yet !

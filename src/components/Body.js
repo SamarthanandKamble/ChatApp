@@ -1,12 +1,10 @@
 import React from "react";
-import ChatPage from "./ChatPage";
+import { Outlet, Navigate } from "react-router-dom";
+import { useUserAuth } from "../utils/Hooks/useUserAuth";
 
 const Body = () => {
-  return (
-    <div>
-      <ChatPage />
-    </div>
-  );
+  const { user } = useUserAuth();
+  return <div>{user ? <Outlet /> : <Navigate to="/signin" />}</div>;
 };
 
 export default Body;

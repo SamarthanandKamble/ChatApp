@@ -1,11 +1,31 @@
+import { createBrowserRouter, Outlet, Navigate } from "react-router-dom";
+import Signin from "./components/Signin";
+import Signup from "./components/Signup";
 import Body from "./components/Body";
-
+import ChatPage from "./components/ChatPage";
 function App() {
-  return (
-    <div className="bg-black w-screen h-dvh text-white">
-      <Body />
-    </div>
-  );
+  return <div></div>;
 }
+
+export const router = createBrowserRouter([
+  {
+    path: "/signin",
+    element: <Signin />,
+  },
+  {
+    path: "/",
+    element: <Body />,
+    children: [
+      {
+        path: "/",
+        element: <ChatPage />,
+      },
+    ],
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
+  },
+]);
 
 export default App;

@@ -83,7 +83,7 @@ const ChatPage = () => {
   };
 
   return (
-    <div className="w-8/12 mx-auto p-4 ">
+    <div className="w-8/12 mx-auto p-4 bg-black text-white">
       <form onSubmit={handleFormSubmit} className="w-6/12  mx-auto">
         <input
           value={messageBody}

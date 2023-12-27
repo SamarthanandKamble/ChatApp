@@ -89,7 +89,7 @@ const ChatPage = () => {
 
   const handleDeleteMessage = async (id) => {
     try {
-      const response = await databases.deleteDocument(
+      await databases.deleteDocument(
         REACT_APP_DATABASE_ID,
         REACT_APP_MESSAGES_COLLECTION_ID,
         id
@@ -121,7 +121,14 @@ const ChatPage = () => {
                     Unknown
                   </span>
                 )}
-                <span className="text-lg p-2 m-1 rounded-md text-white bg-green-700">
+                <span
+                  className={`text-lg p-2 m-1 rounded-md text-white bg-green-700
+                ${
+                  message.user_id === user.$id
+                    ? "bg-green-800"
+                    : " bg-transparent border"
+                }`}
+                >
                   {message.body}
                 </span>
               </div>

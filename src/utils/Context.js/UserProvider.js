@@ -23,10 +23,7 @@ const UserProvider = ({ children }) => {
   const handleLogin = async (e, credentials) => {
     e.preventDefault();
     try {
-      const signinResponse = await account.createEmailSession(
-        credentials.email,
-        credentials.password
-      );
+      await account.createEmailSession(credentials.email, credentials.password);
       const accountDetails = await account.get();
       console.log("Signin response :", accountDetails);
       if (accountDetails?.$id) {
@@ -46,10 +43,7 @@ const UserProvider = ({ children }) => {
         credentials.password,
         credentials.username
       );
-      const signinResponse = await account.createEmailSession(
-        credentials.email,
-        credentials.password
-      );
+      await account.createEmailSession(credentials.email, credentials.password);
       const accountDetails = await account.get();
       if (accountDetails?.$id) {
         setUser(signupResponse);

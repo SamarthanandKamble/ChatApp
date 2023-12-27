@@ -3,23 +3,32 @@ import UserContext from "./userContext";
 import { account, ID } from "../appwriteConfig";
 
 const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(false);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    setLoading(false);
+    getUserOnLoad();
   }, []);
 
+  const getUserOnLoad = async () => {
+    try {
+      const accountDetails = await account.get();
+      setUser(accountDetails);
+    } catch (error) {
+      console.warn(error?.message);
+    }
+    setLoading(false);
+  };
   const handleLogin = async (e, credentials) => {
     e.preventDefault();
-    console.log("lifted state up");
     try {
       const signinResponse = await account.createEmailSession(
         credentials.email,
         credentials.password
       );
       const accountDetails = await account.get();
+      console.log("Signin response :", accountDetails);
       if (accountDetails?.$id) {
         setUser(accountDetails);
       }
@@ -31,23 +40,32 @@ const UserProvider = ({ children }) => {
   const handleSignup = async (e, credentials) => {
     try {
       e.preventDefault();
-      console.log("email", credentials.email);
-      console.log("pass", credentials.password);
       const signupResponse = await account.create(
         ID.unique(),
         credentials.email,
+        credentials.password,
+        credentials.username
+      );
+      const signinResponse = await account.createEmailSession(
+        credentials.email,
         credentials.password
       );
-      console.log("response :-", signupResponse);
-
-      if (signupResponse?.$id) {
+      const accountDetails = await account.get();
+      if (accountDetails?.$id) {
         setUser(signupResponse);
       }
     } catch (error) {
       setError(error.message);
     }
   };
-  const contextData = { user, handleLogin, error, handleSignup };
+
+  const handleLogout = async () => {
+    const logoutResponse = await account.deleteSessions();
+    if (logoutResponse) {
+      setUser(null);
+    }
+  };
+  const contextData = { user, handleLogin, error, handleSignup, handleLogout };
 
   return (
     <UserContext.Provider value={contextData}>

@@ -1,8 +1,5 @@
 import { Client, Databases, ID, Account, Permission, Role } from "appwrite";
 
-export const REACT_APP_DATABASE_ID = "6589769390ef29dade4a";
-export const REACT_APP_MESSAGES_COLLECTION_ID = "658976d395b38da9da33";
-
 const client = new Client();
 client
   .setEndpoint("https://cloud.appwrite.io/v1")

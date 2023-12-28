@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import client, {
   databases,
-  REACT_APP_DATABASE_ID,
-  REACT_APP_MESSAGES_COLLECTION_ID,
   ID,
   Permission,
   Role,
@@ -20,7 +18,7 @@ const ChatPage = () => {
   useEffect(() => {
     getMessages();
     const unsubscribe = client.subscribe(
-      `databases.${REACT_APP_DATABASE_ID}.collections.${REACT_APP_MESSAGES_COLLECTION_ID}.documents`,
+      `databases.${process.env.REACT_APP_DATABASE_ID}.collections.${process.env.REACT_APP_MESSAGES_COLLECTION_ID}.documents`,
       (response) => {
         if (
           response.events.includes(
@@ -50,9 +48,10 @@ const ChatPage = () => {
 
   const getMessages = async () => {
     const response = await databases.listDocuments(
-      REACT_APP_DATABASE_ID,
-      REACT_APP_MESSAGES_COLLECTION_ID
+      process.env.REACT_APP_DATABASE_ID,
+      process.env.REACT_APP_MESSAGES_COLLECTION_ID
     );
+    console.log("getmessates response", response);
     setMessages(response.documents);
   };
 
@@ -67,8 +66,8 @@ const ChatPage = () => {
         };
 
         const response = await databases.createDocument(
-          REACT_APP_DATABASE_ID,
-          REACT_APP_MESSAGES_COLLECTION_ID,
+          process.env.REACT_APP_DATABASE_ID,
+          process.env.REACT_APP_MESSAGES_COLLECTION_ID,
           ID.unique(),
           payload,
           [Permission.delete(Role.user(user.$id))]
@@ -89,8 +88,8 @@ const ChatPage = () => {
   const handleDeleteMessage = async (id) => {
     try {
       await databases.deleteDocument(
-        REACT_APP_DATABASE_ID,
-        REACT_APP_MESSAGES_COLLECTION_ID,
+        `${process.env.REACT_APP_DATABASE_ID}`,
+        `${process.env.REACT_APP_MESSAGES_COLLECTION_ID}`,
         id
       );
     } catch (error) {

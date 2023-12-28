@@ -51,7 +51,6 @@ const ChatPage = () => {
       process.env.REACT_APP_DATABASE_ID,
       process.env.REACT_APP_MESSAGES_COLLECTION_ID
     );
-    console.log("getmessates response", response);
     setMessages(response.documents);
   };
 

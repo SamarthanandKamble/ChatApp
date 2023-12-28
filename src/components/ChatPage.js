@@ -65,7 +65,6 @@ const ChatPage = () => {
           user_name: user.name,
           body: messageBody,
         };
-        console.log("payload", payload);
 
         const response = await databases.createDocument(
           REACT_APP_DATABASE_ID,

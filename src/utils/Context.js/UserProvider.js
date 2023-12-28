@@ -13,6 +13,9 @@ const UserProvider = ({ children }) => {
 
   const getUserOnLoad = async () => {
     try {
+      if (user) {
+        console.log("user");
+      }
       const accountDetails = await account.get();
       setUser(accountDetails);
     } catch (error) {
@@ -25,7 +28,6 @@ const UserProvider = ({ children }) => {
     try {
       await account.createEmailSession(credentials.email, credentials.password);
       const accountDetails = await account.get();
-      console.log("Signin response :", accountDetails);
       if (accountDetails?.$id) {
         setUser(accountDetails);
       }

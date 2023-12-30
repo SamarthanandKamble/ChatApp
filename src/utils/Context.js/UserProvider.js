@@ -13,15 +13,13 @@ const UserProvider = ({ children }) => {
 
   const getUserOnLoad = async () => {
     try {
-      if (user) {
-        console.log("user");
-      }
       const accountDetails = await account.get();
       setUser(accountDetails);
     } catch (error) {
       console.warn(error?.message);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
   const handleLogin = async (e, credentials) => {
     e.preventDefault();

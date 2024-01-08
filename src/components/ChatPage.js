@@ -102,7 +102,7 @@ const ChatPage = () => {
       <Navbar />
       {messages && (
         <div
-          className="w-11/12 mx-auto mt-4 pr-4 h-[40rem] sm:h-[30rem] lg:h-[30rem]  overflow-y-auto border"
+          className="w-11/12 mx-auto mt-4 pr-4 h-[60rem] sm:h-[30rem] lg:h-[30rem]  overflow-y-auto border"
           ref={chatWindow}
         >
           {messages.map((message) => (

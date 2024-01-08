@@ -24,7 +24,7 @@ const Signin = () => {
   }, [user]);
 
   return (
-    <div className="w-screen mx-auto p-4 bg-black h-screen flex flex-col justify-center">
+    <div className="w-screen mx-auto p-4 bg-black min-h-screen flex flex-col justify-center">
       <div className="sm:w-1/2 mx-auto p-2 shadow-slate-300">
         <span className="text-4xl mb-10 font-bold text-green-600">Sign In</span>
         <form

@@ -98,11 +98,11 @@ const ChatPage = () => {
   };
 
   return (
-    <div className="w-full sm:w-1/2 h-[100vh] mx-auto p-2 bg-black text-white relative border">
+    <div className="w-full sm:w-1/2 h-[100vh] sm:min-h-[100vh] mx-auto p-2 bg-black text-white relative border">
       <Navbar />
       {messages && (
         <div
-          className="w-11/12 mx-auto mt-4 pr-4 h-[60rem] sm:h-[30rem] lg:h-[30rem]  overflow-y-auto border"
+          className="w-11/12 mx-auto mt-4 pr-4 h-[30rem] sm:h-[30rem] lg:h-[30rem]  overflow-y-auto border"
           ref={chatWindow}
         >
           {messages.map((message) => (
@@ -147,7 +147,7 @@ const ChatPage = () => {
       )}
       <form
         onSubmit={handleFormSubmit}
-        className="w-11/12 mx-auto absolute left-0 right-0 bottom-0"
+        className="w-11/12 mx-auto absolute left-0 right-0 sm:bottom-0 bottom-20"
       >
         <div className="w-full">
           <input

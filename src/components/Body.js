@@ -9,7 +9,7 @@ const Body = () => {
     <div className="bg-black">
       {user ? (
         <>
-          <Navbar />
+          
           <Outlet />
         </>
       ) : (

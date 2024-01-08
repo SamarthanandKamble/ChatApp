@@ -4,7 +4,7 @@ import Signup from "./components/Signup";
 import Body from "./components/Body";
 import ChatPage from "./components/ChatPage";
 function App() {
-  return <div className="bg-black"></div>;
+  return <div className="bg-black h-full"></div>;
 }
 
 export const router = createBrowserRouter([

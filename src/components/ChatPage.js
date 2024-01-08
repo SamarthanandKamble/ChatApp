@@ -7,6 +7,7 @@ import client, {
 } from "../utils/appwriteConfig";
 import { Trash2 } from "react-feather";
 import { useUserAuth } from "../utils/Hooks/useUserAuth";
+import Navbar from "./Navbar";
 
 const ChatPage = () => {
   const { user } = useUserAuth();
@@ -97,10 +98,11 @@ const ChatPage = () => {
   };
 
   return (
-    <div className="w-12/12 min-h-svh mx-auto p-2 bg-black text-white relative">
+    <div className="w-full sm:w-1/2 h-screen mx-auto p-2 bg-black text-white relative border">
+      <Navbar />
       {messages && (
         <div
-          className="w-11/12 mx-auto mt-4 pr-4 max-h-96 overflow-y-auto"
+          className="w-11/12 mx-auto mt-4 pr-4 h-[30rem] sm:h-[30rem] lg:h-[30rem]  overflow-y-auto border"
           ref={chatWindow}
         >
           {messages.map((message) => (
@@ -145,7 +147,7 @@ const ChatPage = () => {
       )}
       <form
         onSubmit={handleFormSubmit}
-        className="w-11/12 mx-auto mt-6 absolute left-0 right-0 bottom-20"
+        className="w-11/12 mx-auto absolute left-0 right-0 bottom-0"
       >
         <div className="w-full">
           <input

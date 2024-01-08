@@ -6,7 +6,7 @@ const Body = () => {
   const { user } = useUserAuth();
 
   return (
-    <div>
+    <div className="bg-black">
       {user ? (
         <>
           <Navbar />

@@ -98,7 +98,7 @@ const ChatPage = () => {
   };
 
   return (
-    <div className="w-full sm:w-1/2 h-[100vh] sm:min-h-[100vh] mx-auto p-2 bg-black text-white relative border">
+    <div className="w-full sm:w-1/2 h-screen sm:min-h-[100vh] mx-auto p-2 bg-black text-white relative border">
       <Navbar />
       {messages && (
         <div

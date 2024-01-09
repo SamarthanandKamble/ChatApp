@@ -57,6 +57,7 @@ const UserProvider = ({ children }) => {
     const logoutResponse = await account.deleteSessions();
     if (logoutResponse) {
       setUser(null);
+      setError(false);
     }
   };
   const contextData = { user, handleLogin, error, handleSignup, handleLogout };

@@ -4,12 +4,12 @@ import { useUserAuth } from "../utils/Hooks/useUserAuth";
 
 const Signin = () => {
   const { user, handleLogin, error } = useUserAuth();
-
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
     email: "",
     password: "",
   });
+  const [signInBtnText, setSignInBtnText] = useState(false);
 
   const handleInputChange = (e) => {
     let name = e.target.name;
@@ -29,8 +29,15 @@ const Signin = () => {
         <span className="text-4xl mb-10 font-bold text-green-600">Sign In</span>
         <form
           className="w-full mt-4 flex sm:flex-col flex-col items-start"
-          onSubmit={(e) => {
-            handleLogin(e, credentials);
+          onSubmit={async (e) => {
+            try {
+              setSignInBtnText(true);
+              await handleLogin(e, credentials);
+            } catch (error) {
+              console.warn(error?.message);
+            } finally {
+              setSignInBtnText(false);
+            }
           }}
         >
           <label
@@ -75,7 +82,6 @@ const Signin = () => {
               className="p-2 mt-1 border border-gray-300 rounded focus:outline-none focus:border-green-500 hover:border-gray-400 text-black
             sm:w-10/12 sm:mx-8
             w-full lg:w-1/2 lg:mx-auto lg:ml-2 
-          
             "
             />
           </label>
@@ -87,7 +93,7 @@ const Signin = () => {
             type="submit"
             className="bg-green-400 text-black p-2 rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:border-white mt-4 mb-2 font-semibold text-lg w-full sm:mx-auto "
           >
-            Sign in
+            {signInBtnText ? "Wait for a moment..." : "Sign in"}
           </button>
         </form>
         <div>

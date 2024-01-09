@@ -8,13 +8,14 @@ import client, {
 import { Trash2 } from "react-feather";
 import { useUserAuth } from "../utils/Hooks/useUserAuth";
 import Navbar from "./Navbar";
-
+import sound from "../utils/Audio/send_message.wav";
 const ChatPage = () => {
   const { user } = useUserAuth();
   const chatWindow = useRef(null);
   const inputField = useRef(null);
   const [messages, setMessages] = useState([]);
   const [messageBody, setMessageBody] = useState("");
+  const [messageSent, setMessageSent] = useState(false);
 
   useEffect(() => {
     getMessages();
@@ -57,6 +58,8 @@ const ChatPage = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    setMessageSent(true);
+
     try {
       if (messageBody.length > 0) {
         let payload = {
@@ -75,6 +78,8 @@ const ChatPage = () => {
 
         if (chatWindow.current && response) {
           chatWindow.current.scrollTop = chatWindow.current.scrollHeight;
+          playSound();
+          setMessageSent(false);
         }
       } else {
         return;
@@ -85,6 +90,9 @@ const ChatPage = () => {
     setMessageBody("");
   };
 
+  const playSound = () => {
+    new Audio(sound).play();
+  };
   const handleDeleteMessage = async (id) => {
     try {
       await databases.deleteDocument(
@@ -98,7 +106,7 @@ const ChatPage = () => {
   };
 
   return (
-    <div className="w-full sm:w-1/2 h-[100vh] mx-auto p-2 bg-black text-white relative border">
+    <div className="w-full sm:w-1/2 h-[100vh] mx-auto p-2 bg-black text-white relative ">
       <Navbar />
       {messages && (
         <div
@@ -147,7 +155,7 @@ const ChatPage = () => {
       )}
       <form
         onSubmit={handleFormSubmit}
-        className="w-11/12 mx-auto absolute left-0 right-0 bottom-0"
+        className="w-11/12 mx-auto absolute left-0 right-0 sm:bottom-0 bottom-20"
       >
         <div className="w-full">
           <input
@@ -159,7 +167,7 @@ const ChatPage = () => {
             className="text-black mx-auto w-8/12 p-2 focus:outline-none rounded-md"
           />
           <button type="submit" className="w-4/12 p-2 bg-green-700 rounded-md">
-            Send
+            {messageSent ? "Sending" : "Send"}
           </button>
         </div>
       </form>

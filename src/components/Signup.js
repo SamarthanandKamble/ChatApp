@@ -10,6 +10,7 @@ const Signup = () => {
     email: "",
     password: "",
   });
+  const [signUpBtnText, setSignUpBtnText] = useState(false);
 
   const handleInputChange = async (e) => {
     let name = e.target.name;
@@ -29,7 +30,16 @@ const Signup = () => {
         <span className="text-4xl mb-10 font-bold text-green-600">Sign Up</span>
         <form
           className="w-full mt-4 sm:flex sm:flex-col"
-          onSubmit={(e) => handleSignup(e, credentials)}
+          onSubmit={async (e) => {
+            try {
+              setSignUpBtnText(true);
+              await handleSignup(e, credentials);
+            } catch (error) {
+              console.warn(error?.message);
+            } finally {
+              setSignUpBtnText(false);
+            }
+          }}
         >
           <label
             htmlFor="username"
@@ -104,7 +114,7 @@ const Signup = () => {
             type="submit"
             className="bg-green-400 text-black p-2 rounded hover:bg-green-700 focus:outline-none focus:ring-2  focus:border-white mt-4 mb-2 font-semibold text-lg w-full"
           >
-            Sign Up
+            {signUpBtnText ? "Yey! Wait for a moment ..." : "Sign Up"}
           </button>
         </form>
         <div>
